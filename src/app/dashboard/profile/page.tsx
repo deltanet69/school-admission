@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { createBrowserClient } from '@supabase/auth-helpers-nextjs'
+import { supabaseUrl, supabaseAnonKey } from '@/lib/supabaseClient'
 import { User } from '@supabase/supabase-js'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -37,8 +38,8 @@ export default function ProfilePage() {
     const router = useRouter()
 
     const supabase = createBrowserClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+        supabaseUrl,
+        supabaseAnonKey
     )
 
     useEffect(() => {

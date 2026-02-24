@@ -17,6 +17,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { createBrowserClient } from '@supabase/auth-helpers-nextjs'
+import { supabaseUrl, supabaseAnonKey } from '@/lib/supabaseClient'
 import { useEffect, useState } from 'react'
 import { User } from '@supabase/supabase-js'
 import { useRouter } from 'next/navigation'
@@ -34,8 +35,8 @@ export function UserNav() {
     const [loading, setLoading] = useState(true)
     const router = useRouter()
     const supabase = createBrowserClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+        supabaseUrl,
+        supabaseAnonKey
     )
 
     useEffect(() => {

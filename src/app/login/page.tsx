@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createBrowserClient } from '@supabase/auth-helpers-nextjs'
+import { supabaseUrl, supabaseAnonKey } from '@/lib/supabaseClient'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -17,8 +18,8 @@ export default function LoginPage() {
     const [error, setError] = useState<string | null>(null)
     const router = useRouter()
     const supabase = createBrowserClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+        supabaseUrl,
+        supabaseAnonKey
     )
 
     const handleLogin = async (e: React.FormEvent) => {
