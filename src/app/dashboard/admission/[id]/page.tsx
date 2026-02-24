@@ -253,7 +253,7 @@ export default async function AdmissionDetailPage(props: { params: Promise<{ id:
                 {/* Sidebar - Right Column */}
                 <div className="space-y-6">
                     {/* Admin Console */}
-                    <AdmissionActions admission={admission} />
+                    <AdmissionActions />
 
                     {/* Meta Info */}
                     <Card>
