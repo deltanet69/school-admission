@@ -6,12 +6,15 @@ import { sendEmail } from "@/lib/email"
 
 export async function createPaymentTransaction(admissionId: string, applicantName: string, email: string, phone: string, amount: number = 500000) {
     try {
+        // Extract order_id first to avoid circular self-reference inside the object literal
+        const orderId = `ADM-${admissionId.split('-')[0]}-${Date.now()}`;
+
         const transactionDetails = {
             transaction_details: {
                 // Shorten order_id to fit Midtrans limit (max 50 chars)
                 // UUID (36) + Timestamp (13) + Prefix (4) was too long.
                 // New format: ADM-{first_8_chars_of_uuid}-{timestamp} -> ~26 chars
-                order_id: `ADM-${admissionId.split('-')[0]}-${Date.now()}`,
+                order_id: orderId,
                 gross_amount: amount,
             },
             customer_details: {
@@ -28,7 +31,7 @@ export async function createPaymentTransaction(admissionId: string, applicantNam
                 },
             ],
             callbacks: {
-                finish: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/admission/success?order_id=${transactionDetails.transaction_details.order_id}`
+                finish: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/admission/success?order_id=${orderId}`
             }
         };
 
